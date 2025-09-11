@@ -1,1 +1,1629 @@
-http://localhost:8888/notebooks/Likes%20report.ipynb? 
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "f5bfa425-b42f-4f01-aff3-90aa090cb72e",
+   "metadata": {},
+   "source": [
+    "# Likes Report\n",
+    "## Lucy Hennessy\n",
+    "## September 10th, 2025\n",
+    "1. The source of the data is from my personal Instagram page, but it was generated from my own likes, posts, and activity on my account\n",
+    "2. This data was created to document my usage and activity on Facebook. It helps Instagram target ads, improve features, and for me it can provide a way to reflect on old habits or material for research.\n",
+    "3. It can be reliable because it comes directly from Instagram, and it accurately reflects my digital actions on the platform.\n",
+    "4. It can be unreliable if Instagram leaves out certain information, or if I run into a problem with technical errors."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "27b05c6e-7ba4-4a4c-9de5-dc504845f359",
+   "metadata": {},
+   "source": [
+    "## 1. import json"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "416a1163-50c4-4f50-9490-86d8cb1b38fc",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import json\n",
+    "import pandas as pd\n",
+    "import matplotlib.pyplot as plt"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "740712c0-d5f6-4783-bedc-77d4522413d4",
+   "metadata": {},
+   "source": [
+    "## 2. Load the DataSet"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "3fe73d68-aca5-4cdd-be84-35672705a097",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "path = r\"/Users/lucyhennessy/Downloads/instagram-_lucyhennessy-2025-09-10-JH6LixLW/your_instagram_activity/likes/liked_posts.json\"\n",
+    "\n",
+    "with open(path) as f:\n",
+    "    dict = json.load(f)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "dfd2a629-c7fc-4d7d-9d31-bf6c204c55e5",
+   "metadata": {},
+   "source": [
+    "## 3. Convert the Data into DF"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "ab704fb2-806b-4942-abe1-f24df21745eb",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>likes_media_likes</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>{'title': 'entertainmentweekly', 'string_list_...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>{'title': 'paintinglinespodcast', 'string_list...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>{'title': 'osunailsbyellie', 'string_list_data...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>{'title': 'cleguardians', 'string_list_data': ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>{'title': 'dajeunsing', 'string_list_data': [{...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                                   likes_media_likes\n",
+       "0  {'title': 'entertainmentweekly', 'string_list_...\n",
+       "1  {'title': 'paintinglinespodcast', 'string_list...\n",
+       "2  {'title': 'osunailsbyellie', 'string_list_data...\n",
+       "3  {'title': 'cleguardians', 'string_list_data': ...\n",
+       "4  {'title': 'dajeunsing', 'string_list_data': [{..."
+      ]
+     },
+     "execution_count": 15,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df = pd.DataFrame(dict)\n",
+    "df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "id": "c8bf0972-7c7b-400d-a0c4-95263038116a",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "dict_keys(['likes_media_likes'])"
+      ]
+     },
+     "execution_count": 16,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "dict.keys()\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "faf8e9b1-e18c-422e-89e9-050ebe447907",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>title</th>\n",
+       "      <th>string_list_data</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>entertainmentweekly</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DObD1Bj...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>paintinglinespodcast</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/reel/DJcF...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>osunailsbyellie</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DOZ1gT5...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>cleguardians</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DOZuwKB...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>dajeunsing</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/reel/DOZE...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                  title                                   string_list_data\n",
+       "0   entertainmentweekly  [{'href': 'https://www.instagram.com/p/DObD1Bj...\n",
+       "1  paintinglinespodcast  [{'href': 'https://www.instagram.com/reel/DJcF...\n",
+       "2       osunailsbyellie  [{'href': 'https://www.instagram.com/p/DOZ1gT5...\n",
+       "3          cleguardians  [{'href': 'https://www.instagram.com/p/DOZuwKB...\n",
+       "4            dajeunsing  [{'href': 'https://www.instagram.com/reel/DOZE..."
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_tidy = pd.DataFrame(dict['likes_media_likes'])\n",
+    "df_tidy.head()\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "3931da3f-5eef-4b59-875a-2ebb663a2bac",
+   "metadata": {},
+   "source": [
+    "## 4. Create a new column in the DataFrame"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "b3fa68c8-ecc1-4878-ba98-453dbd98c156",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[{'href': 'https://www.instagram.com/p/DObD1BjDh-a/',\n",
+       "  'value': 'ð\\x9f\\x91\\x8d',\n",
+       "  'timestamp': 1757513209}]"
+      ]
+     },
+     "execution_count": 18,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_tidy['string_list_data'].iloc[0]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "id": "e1f21763-35c5-4522-a908-6eb107ebf178",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "list"
+      ]
+     },
+     "execution_count": 20,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "type(df_tidy['string_list_data'].iloc[0])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "id": "10c5a004-deab-4d09-b8c4-5980521141a3",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "1"
+      ]
+     },
+     "execution_count": 21,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "len(df_tidy['string_list_data'].iloc[0])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "id": "2d734af0-f496-47a0-91d3-c9060787dacb",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'href': 'https://www.instagram.com/p/DObD1BjDh-a/',\n",
+       " 'value': 'ð\\x9f\\x91\\x8d',\n",
+       " 'timestamp': 1757513209}"
+      ]
+     },
+     "execution_count": 22,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_tidy['string_list_data'].iloc[0][0]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "id": "91b300ce-f72c-4a63-afa1-a8a508364ab2",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "1757513209"
+      ]
+     },
+     "execution_count": 23,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_tidy['string_list_data'].iloc[0][0]['timestamp']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "id": "c8218cb8-70d0-4fa5-b6a7-d90c51fb9e34",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>title</th>\n",
+       "      <th>string_list_data</th>\n",
+       "      <th>Time of Like</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>entertainmentweekly</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DObD1Bj...</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/p/DObD1BjD...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>paintinglinespodcast</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/reel/DJcF...</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/reel/DJcF7...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>osunailsbyellie</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DOZ1gT5...</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/p/DOZ1gT5k...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>cleguardians</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DOZuwKB...</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/p/DOZuwKBD...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>dajeunsing</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/reel/DOZE...</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/reel/DOZEK...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                  title                                   string_list_data  \\\n",
+       "0   entertainmentweekly  [{'href': 'https://www.instagram.com/p/DObD1Bj...   \n",
+       "1  paintinglinespodcast  [{'href': 'https://www.instagram.com/reel/DJcF...   \n",
+       "2       osunailsbyellie  [{'href': 'https://www.instagram.com/p/DOZ1gT5...   \n",
+       "3          cleguardians  [{'href': 'https://www.instagram.com/p/DOZuwKB...   \n",
+       "4            dajeunsing  [{'href': 'https://www.instagram.com/reel/DOZE...   \n",
+       "\n",
+       "                                        Time of Like  \n",
+       "0  {'href': 'https://www.instagram.com/p/DObD1BjD...  \n",
+       "1  {'href': 'https://www.instagram.com/reel/DJcF7...  \n",
+       "2  {'href': 'https://www.instagram.com/p/DOZ1gT5k...  \n",
+       "3  {'href': 'https://www.instagram.com/p/DOZuwKBD...  \n",
+       "4  {'href': 'https://www.instagram.com/reel/DOZEK...  "
+      ]
+     },
+     "execution_count": 24,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_tidy['Time of Like'] = [ i[0] for i in df_tidy['string_list_data']]\n",
+    "df_tidy.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "id": "ea39ecc0-1989-4d45-b48a-86f2944b361a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from datetime import datetime\n",
+    "df_tidy['Date of Like'] = [ datetime.fromtimestamp (i[0] ['timestamp']) for i in df_tidy['string_list_data']]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "id": "23703afe-e427-4412-ac5f-d43cf018a6ee",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>title</th>\n",
+       "      <th>string_list_data</th>\n",
+       "      <th>Time of Like</th>\n",
+       "      <th>Date of Like</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>entertainmentweekly</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DObD1Bj...</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/p/DObD1BjD...</td>\n",
+       "      <td>2025-09-10 10:06:49</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>paintinglinespodcast</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/reel/DJcF...</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/reel/DJcF7...</td>\n",
+       "      <td>2025-09-09 21:47:27</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>osunailsbyellie</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DOZ1gT5...</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/p/DOZ1gT5k...</td>\n",
+       "      <td>2025-09-09 21:44:25</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>cleguardians</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DOZuwKB...</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/p/DOZuwKBD...</td>\n",
+       "      <td>2025-09-09 21:33:25</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>dajeunsing</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/reel/DOZE...</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/reel/DOZEK...</td>\n",
+       "      <td>2025-09-09 19:16:55</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                  title                                   string_list_data  \\\n",
+       "0   entertainmentweekly  [{'href': 'https://www.instagram.com/p/DObD1Bj...   \n",
+       "1  paintinglinespodcast  [{'href': 'https://www.instagram.com/reel/DJcF...   \n",
+       "2       osunailsbyellie  [{'href': 'https://www.instagram.com/p/DOZ1gT5...   \n",
+       "3          cleguardians  [{'href': 'https://www.instagram.com/p/DOZuwKB...   \n",
+       "4            dajeunsing  [{'href': 'https://www.instagram.com/reel/DOZE...   \n",
+       "\n",
+       "                                        Time of Like        Date of Like  \n",
+       "0  {'href': 'https://www.instagram.com/p/DObD1BjD... 2025-09-10 10:06:49  \n",
+       "1  {'href': 'https://www.instagram.com/reel/DJcF7... 2025-09-09 21:47:27  \n",
+       "2  {'href': 'https://www.instagram.com/p/DOZ1gT5k... 2025-09-09 21:44:25  \n",
+       "3  {'href': 'https://www.instagram.com/p/DOZuwKBD... 2025-09-09 21:33:25  \n",
+       "4  {'href': 'https://www.instagram.com/reel/DOZEK... 2025-09-09 19:16:55  "
+      ]
+     },
+     "execution_count": 26,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_tidy.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "id": "1af71804-9e8a-4c54-9357-5d1ba77e1f3c",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>title</th>\n",
+       "      <th>string_list_data</th>\n",
+       "      <th>Time of Like</th>\n",
+       "      <th>Date of Like</th>\n",
+       "      <th>href</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>entertainmentweekly</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DObD1Bj...</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/p/DObD1BjD...</td>\n",
+       "      <td>2025-09-10 10:06:49</td>\n",
+       "      <td>https://www.instagram.com/p/DObD1BjDh-a/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>paintinglinespodcast</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/reel/DJcF...</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/reel/DJcF7...</td>\n",
+       "      <td>2025-09-09 21:47:27</td>\n",
+       "      <td>https://www.instagram.com/reel/DJcF7VKAcmB/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>osunailsbyellie</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DOZ1gT5...</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/p/DOZ1gT5k...</td>\n",
+       "      <td>2025-09-09 21:44:25</td>\n",
+       "      <td>https://www.instagram.com/p/DOZ1gT5kWEL/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>cleguardians</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DOZuwKB...</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/p/DOZuwKBD...</td>\n",
+       "      <td>2025-09-09 21:33:25</td>\n",
+       "      <td>https://www.instagram.com/p/DOZuwKBDBuH/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>dajeunsing</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/reel/DOZE...</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/reel/DOZEK...</td>\n",
+       "      <td>2025-09-09 19:16:55</td>\n",
+       "      <td>https://www.instagram.com/reel/DOZEKRgD6Ma/</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                  title                                   string_list_data  \\\n",
+       "0   entertainmentweekly  [{'href': 'https://www.instagram.com/p/DObD1Bj...   \n",
+       "1  paintinglinespodcast  [{'href': 'https://www.instagram.com/reel/DJcF...   \n",
+       "2       osunailsbyellie  [{'href': 'https://www.instagram.com/p/DOZ1gT5...   \n",
+       "3          cleguardians  [{'href': 'https://www.instagram.com/p/DOZuwKB...   \n",
+       "4            dajeunsing  [{'href': 'https://www.instagram.com/reel/DOZE...   \n",
+       "\n",
+       "                                        Time of Like        Date of Like  \\\n",
+       "0  {'href': 'https://www.instagram.com/p/DObD1BjD... 2025-09-10 10:06:49   \n",
+       "1  {'href': 'https://www.instagram.com/reel/DJcF7... 2025-09-09 21:47:27   \n",
+       "2  {'href': 'https://www.instagram.com/p/DOZ1gT5k... 2025-09-09 21:44:25   \n",
+       "3  {'href': 'https://www.instagram.com/p/DOZuwKBD... 2025-09-09 21:33:25   \n",
+       "4  {'href': 'https://www.instagram.com/reel/DOZEK... 2025-09-09 19:16:55   \n",
+       "\n",
+       "                                          href  \n",
+       "0     https://www.instagram.com/p/DObD1BjDh-a/  \n",
+       "1  https://www.instagram.com/reel/DJcF7VKAcmB/  \n",
+       "2     https://www.instagram.com/p/DOZ1gT5kWEL/  \n",
+       "3     https://www.instagram.com/p/DOZuwKBDBuH/  \n",
+       "4  https://www.instagram.com/reel/DOZEKRgD6Ma/  "
+      ]
+     },
+     "execution_count": 27,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_tidy['href'] = [i[0] ['href'] for i in df_tidy['string_list_data']]\n",
+    "df_tidy.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "id": "7f9763b8-6b66-4719-9661-2c5561a9e9ae",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>title</th>\n",
+       "      <th>Time of Like</th>\n",
+       "      <th>Date of Like</th>\n",
+       "      <th>href</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>entertainmentweekly</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/p/DObD1BjD...</td>\n",
+       "      <td>2025-09-10 10:06:49</td>\n",
+       "      <td>https://www.instagram.com/p/DObD1BjDh-a/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>paintinglinespodcast</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/reel/DJcF7...</td>\n",
+       "      <td>2025-09-09 21:47:27</td>\n",
+       "      <td>https://www.instagram.com/reel/DJcF7VKAcmB/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>osunailsbyellie</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/p/DOZ1gT5k...</td>\n",
+       "      <td>2025-09-09 21:44:25</td>\n",
+       "      <td>https://www.instagram.com/p/DOZ1gT5kWEL/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>cleguardians</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/p/DOZuwKBD...</td>\n",
+       "      <td>2025-09-09 21:33:25</td>\n",
+       "      <td>https://www.instagram.com/p/DOZuwKBDBuH/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>dajeunsing</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/reel/DOZEK...</td>\n",
+       "      <td>2025-09-09 19:16:55</td>\n",
+       "      <td>https://www.instagram.com/reel/DOZEKRgD6Ma/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1609</th>\n",
+       "      <td>wadesandnoodlesmom</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/p/C_zUoSos...</td>\n",
+       "      <td>2024-09-12 10:50:07</td>\n",
+       "      <td>https://www.instagram.com/p/C_zUoSos6UE/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1610</th>\n",
+       "      <td>keeleyysample</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/p/C_zUXIJs...</td>\n",
+       "      <td>2024-09-12 10:49:28</td>\n",
+       "      <td>https://www.instagram.com/p/C_zUXIJskz1/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1611</th>\n",
+       "      <td>gracencompetty</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/p/C_qX0Pau...</td>\n",
+       "      <td>2024-09-11 23:09:53</td>\n",
+       "      <td>https://www.instagram.com/p/C_qX0PauEEv/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1612</th>\n",
+       "      <td>charleswgodwin</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/p/C_x-lSyx...</td>\n",
+       "      <td>2024-09-11 14:14:54</td>\n",
+       "      <td>https://www.instagram.com/p/C_x-lSyx_Nv/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1613</th>\n",
+       "      <td>bellwalterr</td>\n",
+       "      <td>{'href': 'https://www.instagram.com/p/C_vsgL-u...</td>\n",
+       "      <td>2024-09-10 15:39:34</td>\n",
+       "      <td>https://www.instagram.com/p/C_vsgL-uHiY/</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>1614 rows × 4 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                     title                                       Time of Like  \\\n",
+       "0      entertainmentweekly  {'href': 'https://www.instagram.com/p/DObD1BjD...   \n",
+       "1     paintinglinespodcast  {'href': 'https://www.instagram.com/reel/DJcF7...   \n",
+       "2          osunailsbyellie  {'href': 'https://www.instagram.com/p/DOZ1gT5k...   \n",
+       "3             cleguardians  {'href': 'https://www.instagram.com/p/DOZuwKBD...   \n",
+       "4               dajeunsing  {'href': 'https://www.instagram.com/reel/DOZEK...   \n",
+       "...                    ...                                                ...   \n",
+       "1609    wadesandnoodlesmom  {'href': 'https://www.instagram.com/p/C_zUoSos...   \n",
+       "1610         keeleyysample  {'href': 'https://www.instagram.com/p/C_zUXIJs...   \n",
+       "1611        gracencompetty  {'href': 'https://www.instagram.com/p/C_qX0Pau...   \n",
+       "1612        charleswgodwin  {'href': 'https://www.instagram.com/p/C_x-lSyx...   \n",
+       "1613           bellwalterr  {'href': 'https://www.instagram.com/p/C_vsgL-u...   \n",
+       "\n",
+       "            Date of Like                                         href  \n",
+       "0    2025-09-10 10:06:49     https://www.instagram.com/p/DObD1BjDh-a/  \n",
+       "1    2025-09-09 21:47:27  https://www.instagram.com/reel/DJcF7VKAcmB/  \n",
+       "2    2025-09-09 21:44:25     https://www.instagram.com/p/DOZ1gT5kWEL/  \n",
+       "3    2025-09-09 21:33:25     https://www.instagram.com/p/DOZuwKBDBuH/  \n",
+       "4    2025-09-09 19:16:55  https://www.instagram.com/reel/DOZEKRgD6Ma/  \n",
+       "...                  ...                                          ...  \n",
+       "1609 2024-09-12 10:50:07     https://www.instagram.com/p/C_zUoSos6UE/  \n",
+       "1610 2024-09-12 10:49:28     https://www.instagram.com/p/C_zUXIJskz1/  \n",
+       "1611 2024-09-11 23:09:53     https://www.instagram.com/p/C_qX0PauEEv/  \n",
+       "1612 2024-09-11 14:14:54     https://www.instagram.com/p/C_x-lSyx_Nv/  \n",
+       "1613 2024-09-10 15:39:34     https://www.instagram.com/p/C_vsgL-uHiY/  \n",
+       "\n",
+       "[1614 rows x 4 columns]"
+      ]
+     },
+     "execution_count": 28,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_tidy.drop(columns = ['string_list_data'])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5726da01-165e-4443-95e0-f45d689e3c26",
+   "metadata": {},
+   "source": [
+    "## Section 5: Summarize the number of likes"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "id": "f05021db-93ae-4297-9395-2e886991bd90",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>string_list_data</th>\n",
+       "      <th>Time of Like</th>\n",
+       "      <th>Date of Like</th>\n",
+       "      <th>href</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>title</th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>nataliezacek</th>\n",
+       "      <td>72</td>\n",
+       "      <td>72</td>\n",
+       "      <td>72</td>\n",
+       "      <td>72</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>bernadetteseverson</th>\n",
+       "      <td>58</td>\n",
+       "      <td>58</td>\n",
+       "      <td>58</td>\n",
+       "      <td>58</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>passthatpuss</th>\n",
+       "      <td>46</td>\n",
+       "      <td>46</td>\n",
+       "      <td>46</td>\n",
+       "      <td>46</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>sabrinacarpenter</th>\n",
+       "      <td>43</td>\n",
+       "      <td>43</td>\n",
+       "      <td>43</td>\n",
+       "      <td>43</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>wearetkg</th>\n",
+       "      <td>42</td>\n",
+       "      <td>42</td>\n",
+       "      <td>42</td>\n",
+       "      <td>42</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>ilmvfx</th>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>ifakesoul</th>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>icuwhenicu_com</th>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>ib.gohs</th>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>zipsbarstool</th>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>516 rows × 4 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                    string_list_data  Time of Like  Date of Like  href\n",
+       "title                                                                 \n",
+       "nataliezacek                      72            72            72    72\n",
+       "bernadetteseverson                58            58            58    58\n",
+       "passthatpuss                      46            46            46    46\n",
+       "sabrinacarpenter                  43            43            43    43\n",
+       "wearetkg                          42            42            42    42\n",
+       "...                              ...           ...           ...   ...\n",
+       "ilmvfx                             1             1             1     1\n",
+       "ifakesoul                          1             1             1     1\n",
+       "icuwhenicu_com                     1             1             1     1\n",
+       "ib.gohs                            1             1             1     1\n",
+       "zipsbarstool                       1             1             1     1\n",
+       "\n",
+       "[516 rows x 4 columns]"
+      ]
+     },
+     "execution_count": 29,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_tidy.groupby('title').count().sort_values('Time of Like', ascending = False)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f2007908-129b-412b-8c5a-a7face09d3f7",
+   "metadata": {},
+   "source": [
+    "## 6. State a hypothesis"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b85fad25-59b1-4e06-9a3b-516306ca8951",
+   "metadata": {},
+   "source": [
+    "My Instagram activity shows that I am more active at night. Not only do I like posts more often at night, but I also tend to like comments during this same time period. The specific time period is between 6pm - 12 am."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5ef1cd44-3c93-40d8-94ce-d36986026e21",
+   "metadata": {},
+   "source": [
+    "## 7. Choose a JSON file \n",
+    "The file that I chose is my liked comments file, this file contains data of the name of the account and the date and time of the like. This will help me text my theory of what time I am more active."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "1b26729c-6cf0-4873-96f7-2b9b74e0db5d",
+   "metadata": {},
+   "source": [
+    "## 8. Load in JSON file"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 53,
+   "id": "d86ed400-be85-4cca-8f0a-4527448d9c72",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "path2 = r\"/Users/lucyhennessy/Desktop/instagram-_lucyhennessy-2025-09-10-JH6LixLW/your_instagram_activity/likes/liked_comments.json\"\n",
+    "\n",
+    "with open(path2) as f:\n",
+    "    dict2 = json.load(f)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 54,
+   "id": "a3d82a1c-59d4-4be7-9bba-a59c4957ac4f",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "dict_keys(['likes_comment_likes'])"
+      ]
+     },
+     "execution_count": 54,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "dict2.keys()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 55,
+   "id": "128a66bc-1721-4e39-9573-c64d2a3582cd",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>title</th>\n",
+       "      <th>string_list_data</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>dantast1c</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/reel/DOUw...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>vcastaneda1020</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DN6MMHm...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>giulia_boncristiani</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DOKxgKA...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>brodythebagpiper</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DOHjtHT...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>ellie_gant4</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DNttE-n...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                 title                                   string_list_data\n",
+       "0            dantast1c  [{'href': 'https://www.instagram.com/reel/DOUw...\n",
+       "1       vcastaneda1020  [{'href': 'https://www.instagram.com/p/DN6MMHm...\n",
+       "2  giulia_boncristiani  [{'href': 'https://www.instagram.com/p/DOKxgKA...\n",
+       "3     brodythebagpiper  [{'href': 'https://www.instagram.com/p/DOHjtHT...\n",
+       "4          ellie_gant4  [{'href': 'https://www.instagram.com/p/DNttE-n..."
+      ]
+     },
+     "execution_count": 55,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_comments = pd.DataFrame(dict2['likes_comment_likes'])\n",
+    "df_comments.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ceb09049-fc61-453b-b57c-8aa39d486a4b",
+   "metadata": {},
+   "source": [
+    "## 9. Convert to DataFrame"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 56,
+   "id": "86e4cf02-f501-46e1-8b3b-3931ca226b5d",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>title</th>\n",
+       "      <th>string_list_data</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>dantast1c</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/reel/DOUw...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>vcastaneda1020</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DN6MMHm...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>giulia_boncristiani</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DOKxgKA...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>brodythebagpiper</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DOHjtHT...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>ellie_gant4</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DNttE-n...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>cateejoan</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DNttE-n...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>mommysauruswrecks</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DNqqVuh...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>eleana.renee</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DN7Biyt...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>othrandir</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DNQ7qnb...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>jxryd</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DNxyF7C...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                 title                                   string_list_data\n",
+       "0            dantast1c  [{'href': 'https://www.instagram.com/reel/DOUw...\n",
+       "1       vcastaneda1020  [{'href': 'https://www.instagram.com/p/DN6MMHm...\n",
+       "2  giulia_boncristiani  [{'href': 'https://www.instagram.com/p/DOKxgKA...\n",
+       "3     brodythebagpiper  [{'href': 'https://www.instagram.com/p/DOHjtHT...\n",
+       "4          ellie_gant4  [{'href': 'https://www.instagram.com/p/DNttE-n...\n",
+       "5            cateejoan  [{'href': 'https://www.instagram.com/p/DNttE-n...\n",
+       "6    mommysauruswrecks  [{'href': 'https://www.instagram.com/p/DNqqVuh...\n",
+       "7         eleana.renee  [{'href': 'https://www.instagram.com/p/DN7Biyt...\n",
+       "8            othrandir  [{'href': 'https://www.instagram.com/p/DNQ7qnb...\n",
+       "9                jxryd  [{'href': 'https://www.instagram.com/p/DNxyF7C..."
+      ]
+     },
+     "execution_count": 56,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_comments = pd.DataFrame(dict2['likes_comment_likes'])\n",
+    "df_comments.head(10)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 57,
+   "id": "526aba0e-2380-4cd3-8b54-5c38c9e4b5ca",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from datetime import datetime\n",
+    "\n",
+    "df_comments['Time of Like'] = [i[0]['timestamp'] for i in df_comments['string_list_data']]\n",
+    "df_comments['Date of Like'] = [datetime.fromtimestamp(i[0]['timestamp']) for i in df_comments['string_list_data']]\n",
+    "df_comments['href'] = [i[0]['href'] for i in df_comments['string_list_data']]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 58,
+   "id": "d1be1058-5795-46fb-95f9-6059e1d594a2",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>title</th>\n",
+       "      <th>string_list_data</th>\n",
+       "      <th>Time of Like</th>\n",
+       "      <th>Date of Like</th>\n",
+       "      <th>href</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>dantast1c</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/reel/DOUw...</td>\n",
+       "      <td>1757468868</td>\n",
+       "      <td>2025-09-09 21:47:48</td>\n",
+       "      <td>https://www.instagram.com/reel/DOUwsupAEoF/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>vcastaneda1020</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DN6MMHm...</td>\n",
+       "      <td>1757186312</td>\n",
+       "      <td>2025-09-06 15:18:32</td>\n",
+       "      <td>https://www.instagram.com/p/DN6MMHmk1_n/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>giulia_boncristiani</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DOKxgKA...</td>\n",
+       "      <td>1757018085</td>\n",
+       "      <td>2025-09-04 16:34:45</td>\n",
+       "      <td>https://www.instagram.com/p/DOKxgKAjUZc/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>brodythebagpiper</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DOHjtHT...</td>\n",
+       "      <td>1756859781</td>\n",
+       "      <td>2025-09-02 20:36:21</td>\n",
+       "      <td>https://www.instagram.com/p/DOHjtHTgXWp/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>ellie_gant4</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DNttE-n...</td>\n",
+       "      <td>1756750198</td>\n",
+       "      <td>2025-09-01 14:09:58</td>\n",
+       "      <td>https://www.instagram.com/p/DNttE-nXLWp/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>cateejoan</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DNttE-n...</td>\n",
+       "      <td>1756750197</td>\n",
+       "      <td>2025-09-01 14:09:57</td>\n",
+       "      <td>https://www.instagram.com/p/DNttE-nXLWp/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>mommysauruswrecks</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DNqqVuh...</td>\n",
+       "      <td>1756737153</td>\n",
+       "      <td>2025-09-01 10:32:33</td>\n",
+       "      <td>https://www.instagram.com/p/DNqqVuhJ7WZ/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>eleana.renee</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DN7Biyt...</td>\n",
+       "      <td>1756435157</td>\n",
+       "      <td>2025-08-28 22:39:17</td>\n",
+       "      <td>https://www.instagram.com/p/DN7BiytDE79/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>othrandir</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DNQ7qnb...</td>\n",
+       "      <td>1756419598</td>\n",
+       "      <td>2025-08-28 18:19:58</td>\n",
+       "      <td>https://www.instagram.com/p/DNQ7qnbgKah/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>jxryd</td>\n",
+       "      <td>[{'href': 'https://www.instagram.com/p/DNxyF7C...</td>\n",
+       "      <td>1756414543</td>\n",
+       "      <td>2025-08-28 16:55:43</td>\n",
+       "      <td>https://www.instagram.com/p/DNxyF7CWurn/</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                 title                                   string_list_data  \\\n",
+       "0            dantast1c  [{'href': 'https://www.instagram.com/reel/DOUw...   \n",
+       "1       vcastaneda1020  [{'href': 'https://www.instagram.com/p/DN6MMHm...   \n",
+       "2  giulia_boncristiani  [{'href': 'https://www.instagram.com/p/DOKxgKA...   \n",
+       "3     brodythebagpiper  [{'href': 'https://www.instagram.com/p/DOHjtHT...   \n",
+       "4          ellie_gant4  [{'href': 'https://www.instagram.com/p/DNttE-n...   \n",
+       "5            cateejoan  [{'href': 'https://www.instagram.com/p/DNttE-n...   \n",
+       "6    mommysauruswrecks  [{'href': 'https://www.instagram.com/p/DNqqVuh...   \n",
+       "7         eleana.renee  [{'href': 'https://www.instagram.com/p/DN7Biyt...   \n",
+       "8            othrandir  [{'href': 'https://www.instagram.com/p/DNQ7qnb...   \n",
+       "9                jxryd  [{'href': 'https://www.instagram.com/p/DNxyF7C...   \n",
+       "\n",
+       "   Time of Like        Date of Like  \\\n",
+       "0    1757468868 2025-09-09 21:47:48   \n",
+       "1    1757186312 2025-09-06 15:18:32   \n",
+       "2    1757018085 2025-09-04 16:34:45   \n",
+       "3    1756859781 2025-09-02 20:36:21   \n",
+       "4    1756750198 2025-09-01 14:09:58   \n",
+       "5    1756750197 2025-09-01 14:09:57   \n",
+       "6    1756737153 2025-09-01 10:32:33   \n",
+       "7    1756435157 2025-08-28 22:39:17   \n",
+       "8    1756419598 2025-08-28 18:19:58   \n",
+       "9    1756414543 2025-08-28 16:55:43   \n",
+       "\n",
+       "                                          href  \n",
+       "0  https://www.instagram.com/reel/DOUwsupAEoF/  \n",
+       "1     https://www.instagram.com/p/DN6MMHmk1_n/  \n",
+       "2     https://www.instagram.com/p/DOKxgKAjUZc/  \n",
+       "3     https://www.instagram.com/p/DOHjtHTgXWp/  \n",
+       "4     https://www.instagram.com/p/DNttE-nXLWp/  \n",
+       "5     https://www.instagram.com/p/DNttE-nXLWp/  \n",
+       "6     https://www.instagram.com/p/DNqqVuhJ7WZ/  \n",
+       "7     https://www.instagram.com/p/DN7BiytDE79/  \n",
+       "8     https://www.instagram.com/p/DNQ7qnbgKah/  \n",
+       "9     https://www.instagram.com/p/DNxyF7CWurn/  "
+      ]
+     },
+     "execution_count": 58,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_comments.head(10)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 59,
+   "id": "4160eb05-b5ce-4e4c-8a7c-4272301cb96e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_comments = df_comments.drop(columns=['string_list_data'])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 60,
+   "id": "e17bf43f-3dbc-429e-a39f-b50c1cce1fdd",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>title</th>\n",
+       "      <th>Time of Like</th>\n",
+       "      <th>Date of Like</th>\n",
+       "      <th>href</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>dantast1c</td>\n",
+       "      <td>1757468868</td>\n",
+       "      <td>2025-09-09 21:47:48</td>\n",
+       "      <td>https://www.instagram.com/reel/DOUwsupAEoF/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>vcastaneda1020</td>\n",
+       "      <td>1757186312</td>\n",
+       "      <td>2025-09-06 15:18:32</td>\n",
+       "      <td>https://www.instagram.com/p/DN6MMHmk1_n/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>giulia_boncristiani</td>\n",
+       "      <td>1757018085</td>\n",
+       "      <td>2025-09-04 16:34:45</td>\n",
+       "      <td>https://www.instagram.com/p/DOKxgKAjUZc/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>brodythebagpiper</td>\n",
+       "      <td>1756859781</td>\n",
+       "      <td>2025-09-02 20:36:21</td>\n",
+       "      <td>https://www.instagram.com/p/DOHjtHTgXWp/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>ellie_gant4</td>\n",
+       "      <td>1756750198</td>\n",
+       "      <td>2025-09-01 14:09:58</td>\n",
+       "      <td>https://www.instagram.com/p/DNttE-nXLWp/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>cateejoan</td>\n",
+       "      <td>1756750197</td>\n",
+       "      <td>2025-09-01 14:09:57</td>\n",
+       "      <td>https://www.instagram.com/p/DNttE-nXLWp/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>mommysauruswrecks</td>\n",
+       "      <td>1756737153</td>\n",
+       "      <td>2025-09-01 10:32:33</td>\n",
+       "      <td>https://www.instagram.com/p/DNqqVuhJ7WZ/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>eleana.renee</td>\n",
+       "      <td>1756435157</td>\n",
+       "      <td>2025-08-28 22:39:17</td>\n",
+       "      <td>https://www.instagram.com/p/DN7BiytDE79/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>othrandir</td>\n",
+       "      <td>1756419598</td>\n",
+       "      <td>2025-08-28 18:19:58</td>\n",
+       "      <td>https://www.instagram.com/p/DNQ7qnbgKah/</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>jxryd</td>\n",
+       "      <td>1756414543</td>\n",
+       "      <td>2025-08-28 16:55:43</td>\n",
+       "      <td>https://www.instagram.com/p/DNxyF7CWurn/</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                 title  Time of Like        Date of Like  \\\n",
+       "0            dantast1c    1757468868 2025-09-09 21:47:48   \n",
+       "1       vcastaneda1020    1757186312 2025-09-06 15:18:32   \n",
+       "2  giulia_boncristiani    1757018085 2025-09-04 16:34:45   \n",
+       "3     brodythebagpiper    1756859781 2025-09-02 20:36:21   \n",
+       "4          ellie_gant4    1756750198 2025-09-01 14:09:58   \n",
+       "5            cateejoan    1756750197 2025-09-01 14:09:57   \n",
+       "6    mommysauruswrecks    1756737153 2025-09-01 10:32:33   \n",
+       "7         eleana.renee    1756435157 2025-08-28 22:39:17   \n",
+       "8            othrandir    1756419598 2025-08-28 18:19:58   \n",
+       "9                jxryd    1756414543 2025-08-28 16:55:43   \n",
+       "\n",
+       "                                          href  \n",
+       "0  https://www.instagram.com/reel/DOUwsupAEoF/  \n",
+       "1     https://www.instagram.com/p/DN6MMHmk1_n/  \n",
+       "2     https://www.instagram.com/p/DOKxgKAjUZc/  \n",
+       "3     https://www.instagram.com/p/DOHjtHTgXWp/  \n",
+       "4     https://www.instagram.com/p/DNttE-nXLWp/  \n",
+       "5     https://www.instagram.com/p/DNttE-nXLWp/  \n",
+       "6     https://www.instagram.com/p/DNqqVuhJ7WZ/  \n",
+       "7     https://www.instagram.com/p/DN7BiytDE79/  \n",
+       "8     https://www.instagram.com/p/DNQ7qnbgKah/  \n",
+       "9     https://www.instagram.com/p/DNxyF7CWurn/  "
+      ]
+     },
+     "execution_count": 60,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_comments.head(10)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0614e511-52c7-4a8f-912c-9840f5b7911e",
+   "metadata": {},
+   "source": [
+    "## 10. Reflection"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b34e1644-ab5c-40c3-8725-f362d21be157",
+   "metadata": {},
+   "source": [
+    "Both the liked posts and liked comments files show when and where I engaged on Instagram. After tidying, each row represents one interaction with clear columns for account, time, date, and link. Looking at the timestamps, half of my likes — on both posts and comments — fall between 6:00pm and 12:00am, which supports my hypothesis to a certain point. However, in both liked posts and comments, the data displays 10 examples, and both are split 50% of before 6:00pm and after 6:00pm. But, since I did not split the day into 2 12 hour sections to interpret the data, I am able to believe that beyond the 10 examples displayed, I am more active at night. This is because out of 10, 5 fit the criteria, but it is only 1/4 of the day that the data can fall into. If I were to split it "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "5eb80938-171d-4fc2-aebf-c057aef63d30",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python [conda env:base] *",
+   "language": "python",
+   "name": "conda-base-py"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.13.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
